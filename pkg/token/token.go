@@ -36,9 +36,6 @@ func Init(configJWT *JWTConfig) (err error) {
 
 // LoadPrivateRSAKey загрузка закрытого ключа из файла
 func LoadPrivateRSAKey(privateKeyFile string) error {
-	//pathApp := filepath.Dir(os.Args[0]) + string(filepath.Separator)
-	//privateKeyFile = pathApp + privateKeyFile
-
 	// загрузка приватного ключа из файла
 	keyByte, err := os.ReadFile(privateKeyFile)
 	if err != nil {

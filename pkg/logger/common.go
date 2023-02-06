@@ -24,12 +24,9 @@ func EndMain(err *error) {
 
 	// ошибку в лог
 	if *err != nil {
-		var additionInfo interface{}
-		switch errExt := (*err).(type) {
-		case *ExtendedError:
-			additionInfo = errExt.Addition
-		}
-		log.Error().Err(*err).Interface("Addition", additionInfo).Msg("finish main-")
+		logMsg := log.Error().Err(*err)
+		logMsg = AddAddition(err, logMsg)
+		logMsg.Msg("finish main-")
 		os.Exit(1)
 		return
 	}
