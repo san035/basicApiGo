@@ -1,8 +1,8 @@
 package userclass
 
 import (
-	"cmd/main.go/pkg/token"
 	"fmt"
+	"github.com/san035/basicApiGo/pkg/token"
 	"time"
 )
 

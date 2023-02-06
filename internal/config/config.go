@@ -1,11 +1,11 @@
 package config
 
 import (
-	"cmd/main.go/pkg/logger"
-	"cmd/main.go/pkg/osutils"
 	"fmt"
 	"github.com/jinzhu/configor"
 	"github.com/rs/zerolog/log"
+	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/osutils"
 	"os"
 	"path/filepath"
 	"time"

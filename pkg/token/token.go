@@ -1,13 +1,13 @@
 package token
 
 import (
-	"cmd/main.go/internal/config"
-	"cmd/main.go/pkg/logger"
 	"crypto/rsa"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
+	"github.com/san035/basicApiGo/internal/config"
+	"github.com/san035/basicApiGo/pkg/logger"
 	"os"
 	"time"
 )

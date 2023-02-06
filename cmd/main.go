@@ -1,11 +1,11 @@
 package main
 
 import (
-	"cmd/main.go/internal/config"
-	"cmd/main.go/internal/router"
-	"cmd/main.go/pkg/logger"
-	"cmd/main.go/pkg/osutils"
-	"cmd/main.go/pkg/token"
+	"github.com/san035/basicApiGo/internal/config"
+	"github.com/san035/basicApiGo/internal/router"
+	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/osutils"
+	"github.com/san035/basicApiGo/pkg/token"
 )
 
 func main() {

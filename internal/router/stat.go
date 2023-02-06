@@ -1,9 +1,9 @@
 package router
 
 import (
-	"cmd/main.go/internal/config"
-	"cmd/main.go/internal/userclass"
 	"github.com/gofiber/fiber/v2"
+	"github.com/san035/basicApiGo/internal/config"
+	"github.com/san035/basicApiGo/internal/userclass"
 	"github.com/shirou/gopsutil/host"
 	"os"
 	"runtime"

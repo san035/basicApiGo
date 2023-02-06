@@ -1,4 +1,4 @@
-module cmd/main.go
+module github.com/san035/basicApiGo
 
 go 1.19
 

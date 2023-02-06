@@ -1,12 +1,12 @@
 package router
 
 import (
-	"cmd/main.go/internal/config"
-	"cmd/main.go/pkg/logger"
 	"errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/rs/zerolog/log"
+	"github.com/san035/basicApiGo/internal/config"
+	"github.com/san035/basicApiGo/pkg/logger"
 	"strconv"
 )
 

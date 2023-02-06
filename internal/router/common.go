@@ -2,11 +2,11 @@
 package router
 
 import (
-	"cmd/main.go/internal/userclass"
-	"cmd/main.go/pkg/logger"
-	"cmd/main.go/pkg/token"
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog/log"
+	"github.com/san035/basicApiGo/internal/userclass"
+	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/token"
 )
 
 // Запись в лог события о запросе
