@@ -110,19 +110,11 @@ func Create(mapDataJWT map[string]interface{}) (tokenString string, err error) {
 	return jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(privateKey)
 }
 
-// func VerifyToken(tokenString string) error {
+// Использование:
 //
-//		// parse and verify signature
-//		token, err := jwt.Parse([]byte(tokenString), jwt.WithVerify(jwa.HS256, []byte(config.Config.JWT.SecretJWTKey)))
-//		if err != nil {
-//			return err
-//		}
-//
-//		// validate the essential claims
-//		err = jwt.Validate(token)
-//		return err
-//	}
-
+//	var Config = struct {
+//		JWT token.JWTConfig
+//	}{}
 type JWTConfig struct {
 	// секретный ключ для формирования токена, алгоритм rs256
 	PrivateKeyFile string        `env:"JWT_FILE_PRIVATE_KEY_RSA" default:"" yaml:"PrivateKeyFile"`
