@@ -6,19 +6,12 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/osutils"
+	"github.com/san035/basicApiGo/pkg/token"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 const NAME_FILE_CONFIG_YAML = "config.yml"
-
-type JWTConfig struct {
-	// секретный ключ для формирования токена, алгоритм rs256
-	PrivateKeyFile string        `env:"JWT_FILE_PRIVATE_KEY_RSA" default:"" yaml:"PrivateKeyFile"`
-	PublicKeyFile  string        `env:"JWT_FILE_PUBLIC_KEY_RSA"  default:"rsa_key/jwt_public_key_rsa" yaml:"PublicKeyFile"`
-	ExpiresMinutes time.Duration `default:"10800" env:"JWT_EXPIRES_MINUTES" yaml:"ExpiresMinutes"` // срок действия токена в минутах
-}
 
 type DBConfig struct {
 	ListUri  []string `env:"DB_LIST_URI" default:"[\"bpm.dev.itkn.ru:3301\"]"` // Список uri БД через запятую, пример env DB_LIST_URI=["bpm.dev.itkn.ru:3301"]
@@ -34,7 +27,7 @@ var Config = struct {
 		LevelLog      string `default:"info" env:"API_LEVELlOG" yaml:"LevelLog"`              // Режим логгирования
 	}
 	DB  DBConfig
-	JWT JWTConfig
+	JWT token.JWTConfig
 }{}
 
 // LoadConfig загрузка config.yml и env

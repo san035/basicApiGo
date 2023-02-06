@@ -149,7 +149,7 @@ func DoListTest(t *testing.T, listTests *[]ItemTest) {
 }
 
 // setTestJWT установка тестовых rsa_key файлов
-func setTestJWT(config *config.JWTConfig) error {
+func setTestJWT(config *token.JWTConfig) error {
 	_, file, _, ok := runtime.Caller(0)
 	if !ok {
 		return logger.New("Ошибка получения текущей папки тестов")
