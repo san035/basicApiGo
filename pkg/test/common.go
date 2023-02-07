@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/internal/config"
-	"github.com/san035/basicApiGo/internal/db"
 	"github.com/san035/basicApiGo/internal/router"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/token"
@@ -70,10 +69,10 @@ func init() {
 	}
 
 	// Тест всех uri БД
-	err = db.Init(&config.Config.DB)
-	if err != nil {
-		log.Error().Err(err).Msg("db.Init-")
-	}
+	//err = db.Init(&config.Config.DB)
+	//if err != nil {
+	//	log.Error().Err(err).Msg("db.Init-")
+	//}
 
 }
 
