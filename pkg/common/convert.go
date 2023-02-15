@@ -1,9 +1,6 @@
 package common
 
 import (
-	"github.com/rs/zerolog/log"
-	"os"
-	"path/filepath"
 	"reflect"
 )
 
@@ -17,20 +14,6 @@ func SetValueDefaultByReflect(valueStruct interface{}) {
 			newValue := itemsType.Field(i).Tag.Get("default")
 			itemValue.SetString(newValue)
 		}
-	}
-	return
-}
-
-const NAME_FILE_CONFIG_YAML = "config.yml"
-
-// GetFilesConfig возвращает список с файлом конфигурации
-func GetFilesConfig() (filesConfigYaml []string) {
-	fileConfig := filepath.Dir(os.Args[0]) + string(filepath.Separator) + NAME_FILE_CONFIG_YAML
-	if _, err := os.Stat(fileConfig); err == nil {
-		filesConfigYaml = append(filesConfigYaml, fileConfig)
-		log.Debug().Str("file", fileConfig).Msg("Найден файл " + NAME_FILE_CONFIG_YAML)
-	} else {
-		log.Debug().Str("file", fileConfig).Msg("Не найден файл " + NAME_FILE_CONFIG_YAML)
 	}
 	return
 }
