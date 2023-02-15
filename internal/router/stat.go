@@ -63,7 +63,6 @@ func Stat(ctx *fiber.Ctx) (err error) {
 		// Инфо для админов
 		if user.Role == userclass.RoleAdmin {
 			mapaboutAPI["JWT_FILE_PUBLIC_KEY_RSA"], _ = os.ReadFile(config.Config.JWT.PublicKeyFile)
-			mapaboutAPI["DB_LIST_URI"] = config.Config.DB.ListUri
 		}
 	}
 

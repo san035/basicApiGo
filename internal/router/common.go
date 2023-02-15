@@ -86,3 +86,12 @@ func GetUserByTokenRequest(ctx *fiber.Ctx) (user *userclass.User, err error) {
 	}
 	return
 }
+
+// SendReeplyOk Отправка ok в ответ запроса
+func SendReeplyOk(ctx *fiber.Ctx) error {
+	err := ctx.Send([]byte(`{"Status":"ok"}`))
+	if err != nil {
+		err = logger.WrapWithDeep1(&err)
+	}
+	return err
+}
