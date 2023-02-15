@@ -9,6 +9,11 @@ go get -u github.com/san035/basicApiGo@latest
 go get -u github.com/san035/basicApiGo@v1.0.6
 ```
 
+или
+```
+go mod tidy
+```
+
 ## git добавление новой версии
 git tag v1.0.7
 git push --tags
