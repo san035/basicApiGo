@@ -118,3 +118,12 @@ type JWTConfig struct {
 	PublicKeyFile  string        `env:"JWT_FILE_PUBLIC_KEY_RSA"  default:"rsa_key/jwt_public_key_rsa" yaml:"PublicKeyFile"`
 	ExpiresMinutes time.Duration `default:"10800" env:"JWT_EXPIRES_MINUTES" yaml:"ExpiresMinutes"` // срок действия токена в минутах
 }
+
+// CoveredToken возвращает для публичного показа
+func CoveredToken(token *string) string {
+	len_token := len(*token)
+	if len_token > 12 {
+		return (*token)[0:10] + "***" + (*token)[len_token-4:]
+	}
+	return "Empty"
+}
