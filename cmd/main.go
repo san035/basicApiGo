@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/internal/router"
+	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/osutils"
 	"github.com/san035/basicApiGo/pkg/token"
@@ -23,11 +24,15 @@ func main() {
 	// Проверка аргументов
 	osutils.ChaeckArg()
 
-	//// Загрузка настроек из env
-	err = config.LoadConfig()
+	// Загрузка настроек
+	err = common.LoadConfig(&config.Config)
 	if err != nil {
 		return
 	}
+
+	// формирование полных путей
+	osutils.AddPathApp(&config.Config.JWT.PrivateKeyFile)
+	osutils.AddPathApp(&config.Config.JWT.PublicKeyFile)
 
 	// Обновление уровня логгирования, после загрузки конфигурации
 	logger.UpdateLevelLog(config.Config.API.LevelLog)

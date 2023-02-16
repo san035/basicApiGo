@@ -1,17 +1,8 @@
 package config
 
 import (
-	"fmt"
-	"github.com/jinzhu/configor"
-	"github.com/rs/zerolog/log"
-	"github.com/san035/basicApiGo/pkg/logger"
-	"github.com/san035/basicApiGo/pkg/osutils"
 	"github.com/san035/basicApiGo/pkg/token"
-	"os"
-	"path/filepath"
 )
-
-const NAME_FILE_CONFIG_YAML = "config.yml"
 
 type DBConfig struct {
 	ListUri  []string `env:"DB_LIST_URI" default:"[\"bpm.dev.itkn.ru:3301\"]"` // Список uri БД через запятую, пример env DB_LIST_URI=["bpm.dev.itkn.ru:3301"]
@@ -29,31 +20,3 @@ var Config = struct {
 	DB  DBConfig
 	JWT token.JWTConfig
 }{}
-
-// LoadConfig загрузка config.yml и env
-func LoadConfig() (err error) {
-
-	//поиск файла config.yml
-	filesConfigYaml := []string{}
-	fileConfig := filepath.Dir(os.Args[0]) + string(filepath.Separator) + NAME_FILE_CONFIG_YAML
-	if _, err = os.Stat(fileConfig); err == nil {
-		filesConfigYaml = append(filesConfigYaml, fileConfig)
-		log.Debug().Str("file", fileConfig).Msg("Найден файл " + NAME_FILE_CONFIG_YAML)
-	} else {
-		log.Debug().Str("file", fileConfig).Msg("Не найден файл " + NAME_FILE_CONFIG_YAML)
-	}
-
-	// загрузка
-	err = configor.Load(&Config, filesConfigYaml...)
-	if err != nil {
-		err = logger.Wrap(&err, "config.LoadConfig")
-		return
-	}
-
-	// формирование полных путей
-	osutils.AddPathApp(&Config.JWT.PrivateKeyFile)
-	osutils.AddPathApp(&Config.JWT.PublicKeyFile)
-
-	log.Debug().Str("Config", fmt.Sprintf("%#v", Config)).Msg("Load configs+")
-	return
-}

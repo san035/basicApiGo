@@ -7,6 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/internal/router"
+	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/token"
 	"github.com/stretchr/testify/assert"
@@ -53,7 +54,7 @@ func init() {
 	logger.Init("debug")
 
 	// Загрузка настроек из env
-	err = config.LoadConfig()
+	err = common.LoadConfig(&config.Config)
 	if err != nil {
 		return
 	}
@@ -74,6 +75,10 @@ func init() {
 	//	log.Error().Err(err).Msg("db.Init-")
 	//}
 
+}
+
+func Init() {
+	return
 }
 
 // DoListTest Общий исполнитель cписка тестов
