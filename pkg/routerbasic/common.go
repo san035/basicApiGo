@@ -3,9 +3,9 @@ package routerbasic
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog/log"
-	"github.com/san035/basicApiGo/internal/userclass"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/token"
+	"github.com/san035/basicApiGo/pkg/userclass"
 )
 
 // SendReeplyOk Отправка ok в ответ запроса

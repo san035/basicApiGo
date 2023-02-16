@@ -3,8 +3,8 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/san035/basicApiGo/internal/config"
-	"github.com/san035/basicApiGo/internal/userclass"
 	"github.com/san035/basicApiGo/pkg/routerbasic"
+	"github.com/san035/basicApiGo/pkg/userclass"
 	"github.com/shirou/gopsutil/host"
 	"os"
 	"runtime"

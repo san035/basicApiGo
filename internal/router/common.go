@@ -3,9 +3,9 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/san035/basicApiGo/internal/userclass"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/token"
+	"github.com/san035/basicApiGo/pkg/userclass"
 )
 
 // GetUserByTokenRequest возвращает user по токену из заголовка
