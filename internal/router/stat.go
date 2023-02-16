@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/internal/userclass"
+	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"github.com/shirou/gopsutil/host"
 	"os"
 	"runtime"
@@ -19,7 +20,7 @@ func init() {
 // Stat информацию о микросервисе
 func Stat(ctx *fiber.Ctx) (err error) {
 	// Логгирование и перехват фатальных ошибок
-	defer addRequestToLog(ctx, &err, nil)
+	defer routerbasic.AddRequestToLog(ctx, &err, nil)
 
 	mapaboutAPI := map[string]interface{}{}
 
