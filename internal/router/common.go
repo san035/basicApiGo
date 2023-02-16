@@ -55,7 +55,6 @@ func GetUserByTokenRequest(ctx *fiber.Ctx) (user *userclass.User, err error) {
 	// Валидация токена
 	mapClaims, err := token.Validate(&tokenString)
 	if err != nil {
-		err = logger.Wrap(&err)
 		return
 	}
 

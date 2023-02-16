@@ -4,7 +4,6 @@ import (
 	"crypto/rsa"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"os"
@@ -71,7 +70,7 @@ func LoadPublicRSAKey(publicKeyFile string) error {
 func Validate(token *string) (jwt.MapClaims, error) {
 	// проверка в токене Bearer
 	if len(*token) < 8 || (*token)[:7] != "Bearer " {
-		return nil, errors.New(HeaderAuthorizationNotBeginBearer)
+		return nil, logger.New(HeaderAuthorizationNotBeginBearer, map[string]string{"Authorization": CoveredToken(token)})
 	}
 
 	*token = (*token)[7:]
@@ -84,12 +83,12 @@ func Validate(token *string) (jwt.MapClaims, error) {
 		return publicKey, nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, logger.Wrap(&err, map[string]string{"Authorization": CoveredToken(token)})
 	}
 
 	claims, ok := tok.Claims.(jwt.MapClaims)
 	if !ok || !tok.Valid {
-		return nil, fmt.Errorf(InvalidToken)
+		return nil, logger.New(InvalidToken, map[string]string{"Authorization": CoveredToken(token)})
 	}
 
 	return claims, nil
