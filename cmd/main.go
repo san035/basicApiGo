@@ -6,6 +6,7 @@ import (
 	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/osutils"
+	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"github.com/san035/basicApiGo/pkg/token"
 )
 
@@ -44,5 +45,6 @@ func main() {
 	}
 
 	// Запуск хостинга
-	err = router.Init()
+	router.InitEndPoint()
+	err = routerbasic.StartWebServer(&config.Config.API.ListPort)
 }
