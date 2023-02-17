@@ -15,7 +15,7 @@ const (
 type User struct {
 	ID       string `json:"id"`
 	Email    string `json:"email" xml:"email" form:"email"`
-	Password string `json:"-" xml:"password" form:"password"`
+	Password string `json:"password" xml:"password" form:"password"`
 	Role     string `json:"role" xml:"role" form:"role"`
 	CreatAt  int64  `json:"CreatAt"`  // Дата создания UNIX
 	UpdateAt int64  `json:"UpdateAt"` // Дата обновления UNIX
