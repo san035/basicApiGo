@@ -1,9 +1,8 @@
-package router
+package routerbasic
 
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/san035/basicApiGo/internal/config"
-	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"github.com/san035/basicApiGo/pkg/userclass"
 	"github.com/shirou/gopsutil/host"
 	"os"
@@ -20,7 +19,7 @@ func init() {
 // Stat информацию о микросервисе
 func Stat(ctx *fiber.Ctx) (err error) {
 	// Логгирование и перехват фатальных ошибок
-	defer routerbasic.AddRequestToLog(ctx, &err, nil)
+	defer AddRequestToLog(ctx, &err, nil)
 
 	mapaboutAPI := map[string]interface{}{}
 
@@ -55,7 +54,7 @@ func Stat(ctx *fiber.Ctx) (err error) {
 	if err != nil {
 		mapaboutAPI["Check token"] = err.Error()
 		ctx.Status(fiber.StatusUnauthorized)
-		return
+
 	} else {
 		mapaboutAPI["user token"] = struct {
 			ID, Email, Role, Exp string
@@ -63,7 +62,9 @@ func Stat(ctx *fiber.Ctx) (err error) {
 
 		// Инфо для админов
 		if user.Role == userclass.RoleAdmin {
+			mapaboutAPI["JWT_EXPIRES_MINUTES"] = config.Config.JWT.ExpiresMinutes
 			mapaboutAPI["JWT_FILE_PUBLIC_KEY_RSA"], _ = os.ReadFile(config.Config.JWT.PublicKeyFile)
+			mapaboutAPI["DB_LIST_URI"] = config.Config.DB.ListUri
 		}
 	}
 

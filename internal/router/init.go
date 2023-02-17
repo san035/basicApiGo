@@ -7,6 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"strconv"
 )
 
@@ -51,8 +52,8 @@ func Init() (err error) {
 // InitEndPoint добавление всех маршрутов
 func InitEndPoint(app *fiber.App) {
 	//Информация о микросервисе
-	app.Get("/", Stat)
-	app.Get("/stat/", Stat)
+	app.Get("/", routerbasic.Stat)
+	app.Get("/stat/", routerbasic.Stat)
 }
 
 func initCors(app *fiber.App) {
