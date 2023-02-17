@@ -9,13 +9,15 @@ import (
 
 var AppFiber = fiber.New(fiber.Config{DisableStartupMessage: true})
 
+func init() {
+	// Настройка роутинга
+	InitCors(AppFiber)
+}
+
 // Запуск web сервера
 func StartWebServer(listPort *[]int) (err error) {
 
 	ptotocol := "http"
-
-	// Настройка роутинга
-	InitCors(AppFiber)
 
 	// Запуск Listen на свободном порту
 	for _, freePort := range *listPort {
