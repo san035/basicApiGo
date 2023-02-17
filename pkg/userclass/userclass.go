@@ -24,7 +24,7 @@ type User struct {
 
 // MarshalJSON переопределение CreatAt и UpdateAt для вызовов Marshal
 func (user *User) MarshalJSON() ([]byte, error) {
-	userStr := fmt.Sprintf("{\"ID\":\"%s\",\"email\":\"%s\",\"role\":\"%s\",\"CreatAt\":\"%s\",\"UpdateAt\":\"%s\"}",
+	userStr := fmt.Sprintf("{\"id\":\"%s\",\"email\":\"%s\",\"role\":\"%s\",\"CreatAt\":\"%s\",\"UpdateAt\":\"%s\"}",
 		user.ID, user.Email, user.Role, time.Unix(user.CreatAt, 0).Format(FormatDate), time.Unix(user.UpdateAt, 0).Format(FormatDate))
 	return []byte(userStr), nil
 }
