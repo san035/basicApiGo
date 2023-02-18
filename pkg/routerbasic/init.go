@@ -10,12 +10,15 @@ import (
 var AppFiber = fiber.New(fiber.Config{DisableStartupMessage: true})
 
 func init() {
-	// Настройка роутинга
 	InitCors(AppFiber)
 }
 
-// Запуск web сервера
-func StartWebServer(listPort *[]int) (err error) {
+// StartWebServer Запуск web сервера
+// funcInitEndPoint - функция в которой добавляются endpoint
+func StartWebServer(listPort *[]int, funcInitEndPoint func(*fiber.App)) (err error) {
+
+	// Настройка роутинга
+	funcInitEndPoint(AppFiber)
 
 	ptotocol := "http"
 

@@ -45,6 +45,5 @@ func main() {
 	}
 
 	// Запуск хостинга
-	router.InitEndPoint(routerbasic.AppFiber)
-	err = routerbasic.StartWebServer(&config.Config.API.ListPort)
+	err = routerbasic.StartWebServer(&config.Config.API.ListPort, router.InitEndPoint)
 }
