@@ -38,6 +38,7 @@ func ChaeckArg() {
 }
 
 // AddPathApp добавление к file паки исполняемого файла
+// формирование полных путей
 func AddPathApp(file *string) {
 	lenName := len(*file)
 	if lenName == 0 {

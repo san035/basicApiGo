@@ -42,6 +42,10 @@ func (e *ExtendedError) Error() string {
 	return e.Err.Error()
 }
 
+func WrapText(err *error, addText string) *ExtendedError {
+	return New((*err).Error() + ", " + addText)
+}
+
 func (e *ExtendedError) GetAddition() interface{} {
 	return e.Addition
 }
