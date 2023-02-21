@@ -6,6 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/osutils"
 	"os"
 	"time"
 )
@@ -18,10 +19,12 @@ var (
 
 // Init загрузка закрытого и открытого ключа из файлов
 func Init(configJWT *JWTConfig) (err error) {
+
 	expiresMinutes = configJWT.ExpiresMinutes
 
 	// загрузка закрытого ключа из файла
 	if configJWT.PrivateKeyFile != "" {
+		osutils.AddPathApp(&configJWT.PrivateKeyFile)
 		err = LoadPrivateRSAKey(configJWT.PrivateKeyFile)
 		if err != nil {
 			return
@@ -29,6 +32,7 @@ func Init(configJWT *JWTConfig) (err error) {
 	}
 
 	// загрузка публичного ключа из файла
+	osutils.AddPathApp(&configJWT.PublicKeyFile)
 	err = LoadPublicRSAKey(configJWT.PublicKeyFile)
 	return
 }
