@@ -130,3 +130,13 @@ func CoveredToken(token *string) string {
 	}
 	return "Empty"
 }
+
+// CoveredTokenInMap если есть заголовок Authorization в mapHeaders, то скрывает его
+func CoveredTokenInMap(mapHeaders *map[string]string) {
+	token, ok := (*mapHeaders)["Authorization"]
+	if !ok {
+		return
+	}
+
+	(*mapHeaders)["Authorization"] = CoveredToken(&token)
+}
