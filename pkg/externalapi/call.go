@@ -9,7 +9,7 @@ import (
 )
 
 // CallApi вызов внешнего API
-func CallApi(listApi *[]ExternalAPI, method string, uri, token, body *string, dataResp interface{}) (err error) {
+func CallApi(listApi *[]ExternalAPI, method string, uri, token *string, body *strings.Reader, dataResp interface{}) (err error) {
 
 	// перебор api
 	for idUri, apiConfig := range *listApi {
@@ -17,7 +17,7 @@ func CallApi(listApi *[]ExternalAPI, method string, uri, token, body *string, da
 		// запрос api
 		urlReq := apiConfig.Uri + *uri
 		var req *http.Request
-		req, err = http.NewRequest(method, urlReq, strings.NewReader(*body))
+		req, err = http.NewRequest(method, urlReq, body)
 		if err != nil {
 			log.Error().Err(err).Str("Method", req.Method).Str(req.Method, urlReq).Msg("api-")
 			continue
