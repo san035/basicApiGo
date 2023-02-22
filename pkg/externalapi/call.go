@@ -1,4 +1,4 @@
-package externalAPI
+package externalapi
 
 import (
 	"encoding/json"
@@ -10,6 +10,7 @@ import (
 
 // CallApi вызов внешнего API
 func CallApi(listApi *[]ExternalAPI, method string, uri, token, body *string, dataResp interface{}) (err error) {
+
 	// перебор api
 	for idUri, apiConfig := range *listApi {
 
