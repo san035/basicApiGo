@@ -34,6 +34,7 @@ func Stat(ctx *fiber.Ctx) (err error) {
 	mapaboutAPI["Параметры запуска:"] = os.Args
 
 	mapaboutAPI["Горутин:"] = runtime.NumGoroutine()
+	mapaboutAPI["Версия компилятора:"] = runtime.Version()
 
 	// Занято памяти
 	var memStat runtime.MemStats
