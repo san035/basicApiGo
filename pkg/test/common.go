@@ -9,6 +9,7 @@ import (
 	"github.com/san035/basicApiGo/internal/router"
 	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
+	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"github.com/san035/basicApiGo/pkg/token"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -77,7 +78,9 @@ func init() {
 
 }
 
-func Init() {
+// Init добавление endpoint
+func Init(funcInitEndPoint func(*fiber.App)) {
+	routerbasic.AddEndpoint(funcInitEndPoint)
 	return
 }
 
