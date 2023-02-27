@@ -1,46 +1,38 @@
 # Пример использования externalapi
 ```
-package apiuser
+package apistorage
 
 import (
-	"fmt"
 	"github.com/san035/basicApiGo/pkg/externalapi"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"net/http"
-	"net/url"
+	"strings"
 )
 
-type ResponseProfileEdit struct {
-	Status string
-	Error  string
+const RoutePhotoId = "/storage/profile/photo/"
+
+type ResponsePhoto struct {
+	Url   string
+	Error string
 }
 
-/*
-Ответы:
-{"Error": "invalid character '{' in literal true (expecting 'r')"}
-{"Status":"ok"}
-*/
+// GetNewURLPhoto получение свежей ссылки на фото
+func GetNewURLPhoto(token, idUser *string) (urlPhoto string, err error) {
 
-const RouteEdit = "/profile/edit/"
-
-// UpdateUrlPhotoInDb вызов api PATCH "/profile/edit/" c новым url в body
-func UpdateUrlPhotoInDb(token, idUser *string, urlPhoto *url.URL) error {
-
-	method := http.MethodPatch
-	uri := RouteEdit + *idUser
-	body := fmt.Sprintf("{\"Photo\":\"%s\"}", urlPhoto.String())
-
-	r := &ResponseProfileEdit{}
-	err := externalAPI.CallApi(&Config.ListApiUser, method, &uri, token, &body, r)
+	method := http.MethodGet
+	uri := RoutePhotoId + *idUser
+	r := &ResponsePhoto{}
+	body := new(strings.Reader)
+	err = externalapi.CallApi(Config.ListApiStorage, method, &uri, token, body, r)
 	if err != nil {
-		return err
+		return
 	}
 
-	if r.Status != "ok" {
-		return logger.New(r.Error + ", " + method + ": " + uri)
+	if r.Error != "" {
+		err = logger.New(r.Error + ", " + method + ": " + uri)
+		return
 	}
 
-	return nil
-
+	return r.Url, nil
 }
 ```

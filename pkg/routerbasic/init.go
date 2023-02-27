@@ -13,6 +13,11 @@ func init() {
 	InitCors(AppFiber)
 }
 
+// AddEndpoint добавление endpoint-ов
+func AddEndpoint(funcInitEndPoint func(*fiber.App)) {
+	funcInitEndPoint(AppFiber)
+}
+
 // StartWebServer Запуск web сервера
 // funcInitEndPoint - функция в которой добавляются endpoint
 func StartWebServer(listPort *[]int, funcInitEndPoint func(*fiber.App)) (err error) {
