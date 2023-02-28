@@ -11,9 +11,15 @@ import (
 )
 
 var startApp time.Time
+var timeBuild string
 
 func init() {
 	startApp = time.Now()
+}
+
+// SetBuildApp установка времени компиляции приложения
+func SetBuildApp(newTimeBuild string) {
+	timeBuild = newTimeBuild
 }
 
 // Stat информацию о микросервисе
@@ -24,12 +30,15 @@ func Stat(ctx *fiber.Ctx) (err error) {
 	mapaboutAPI := map[string]interface{}{}
 
 	//Дата созданя API
-	var fileInfo os.FileInfo
-	fileInfo, err = os.Stat(os.Args[0])
-	if err != nil {
-		return err
+	if timeBuild == "" {
+		var fileInfo os.FileInfo
+		fileInfo, err = os.Stat(os.Args[0])
+		if err != nil {
+			return err
+		}
+		timeBuild = fileInfo.ModTime().Format(time.RFC3339)
 	}
-	mapaboutAPI["Дата созданя API:"] = fileInfo.ModTime().Format(time.RFC3339)
+	mapaboutAPI["Дата созданя API:"] = timeBuild
 	mapaboutAPI["Дата запуска API:"] = startApp.Format(time.RFC3339)
 	mapaboutAPI["Параметры запуска:"] = os.Args
 
