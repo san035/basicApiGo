@@ -78,8 +78,6 @@ func init() {
 }
 
 // Init добавление endpoint
-//
-//lint:ignore U1000 Ignore unused function temporarily for debuggin
 func Init(funcInitEndPoint func(*fiber.App)) {
 	funcInitEndPoint(AppFiberTest)
 	return

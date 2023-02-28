@@ -29,8 +29,8 @@ func Stat(ctx *fiber.Ctx) (err error) {
 	if err != nil {
 		return err
 	}
-	mapaboutAPI["Дата созданя API:"] = fileInfo.ModTime()
-	mapaboutAPI["Дата запуска API:"] = startApp
+	mapaboutAPI["Дата созданя API:"] = fileInfo.ModTime().Format(time.RFC3339)
+	mapaboutAPI["Дата запуска API:"] = startApp.Format(time.RFC3339)
 	mapaboutAPI["Параметры запуска:"] = os.Args
 
 	mapaboutAPI["Горутин:"] = runtime.NumGoroutine()
