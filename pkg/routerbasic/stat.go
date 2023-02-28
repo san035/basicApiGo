@@ -18,7 +18,7 @@ func init() {
 }
 
 // SetBuildApp установка времени компиляции приложения
-func SetBuildApp(newTimeBuild string) {
+func SetTimeBuildApp(newTimeBuild string) {
 	timeBuild = newTimeBuild
 }
 

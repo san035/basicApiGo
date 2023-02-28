@@ -45,5 +45,6 @@ func main() {
 	}
 
 	// Запуск хостинга
+	routerbasic.SetTimeBuildApp(TimeBuild)
 	err = routerbasic.StartWebServer(&config.Config.API.ListPort, router.InitEndPoint)
 }
