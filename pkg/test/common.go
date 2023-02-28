@@ -9,7 +9,6 @@ import (
 	"github.com/san035/basicApiGo/internal/router"
 	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
-	"github.com/san035/basicApiGo/pkg/routerbasic"
 	"github.com/san035/basicApiGo/pkg/token"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -38,7 +37,7 @@ type ItemTest struct {
 	SkipTest           bool                                                    // Признак пропускать тест
 }
 
-var AppFiber = fiber.New()
+var AppFiberTest = fiber.New()
 
 func init() {
 	var err error
@@ -49,7 +48,7 @@ func init() {
 	}(&err)
 
 	//добавление всех маршрутов
-	router.InitEndPoint(AppFiber)
+	router.InitEndPoint(AppFiberTest)
 
 	// Инициализация логгера
 	logger.Init("debug")
@@ -79,8 +78,10 @@ func init() {
 }
 
 // Init добавление endpoint
+//
+//lint:ignore U1000 Ignore unused function temporarily for debuggin
 func Init(funcInitEndPoint func(*fiber.App)) {
-	routerbasic.AddEndpoint(funcInitEndPoint)
+	funcInitEndPoint(AppFiberTest)
 	return
 }
 
@@ -112,7 +113,7 @@ func DoListTest(t *testing.T, listTests *[]ItemTest) {
 		}
 
 		// Выполнение запроса
-		resp, err := AppFiber.Test(req, 50000)
+		resp, err := AppFiberTest.Test(req, 50000)
 		if err != nil {
 			t.Fatal(err)
 		}
