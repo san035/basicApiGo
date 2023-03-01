@@ -2,9 +2,11 @@ package routerbasic
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"strconv"
+	"sync"
 )
 
 var AppFiber = fiber.New(fiber.Config{DisableStartupMessage: true})
@@ -24,6 +26,7 @@ func StartWebServer(listPort *[]int, funcInitEndPoint func(*fiber.App)) (err err
 
 	// Настройка роутинга
 	funcInitEndPoint(AppFiber)
+	InitPprof("")
 
 	ptotocol := "http"
 
@@ -43,4 +46,12 @@ func StartWebServer(listPort *[]int, funcInitEndPoint func(*fiber.App)) (err err
 		err = logger.Wrap(&err)
 	}
 	return err
+}
+
+// InitPprof запуск pprof: /prefix/debug/pprof/
+func InitPprof(prefix string) {
+	var once sync.Once
+	once.Do(func() {
+		AppFiber.Use(pprof.New(pprof.Config{Prefix: prefix}))
+	})
 }
