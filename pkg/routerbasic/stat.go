@@ -25,7 +25,7 @@ func SetTimeBuildApp(newTimeBuild string) {
 // Stat информацию о микросервисе
 func Stat(ctx *fiber.Ctx) (err error) {
 	// Логгирование и перехват фатальных ошибок
-	defer AddRequestToLog(ctx, &err, nil)
+	defer EndRequest(ctx, &err)
 
 	mapaboutAPI := map[string]interface{}{}
 
