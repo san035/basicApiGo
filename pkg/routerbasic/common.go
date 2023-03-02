@@ -1,6 +1,7 @@
 package routerbasic
 
 import (
+	"context"
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/pkg/logger"
@@ -57,7 +58,7 @@ func AddRequestToLog(ctx *fiber.Ctx, err *error, addFields interface{}) {
 }
 
 // GetUserByTokenRequest возвращает user по токену из заголовка
-func GetUserByTokenRequest(ctx *fiber.Ctx) (user *userclass.User, err error) {
+func GetUserByTokenRequest(ctx *fiber.Ctx) (userToken *userclass.User, err error) {
 	tokenString := ctx.Get("Authorization", "")
 
 	// Валидация токена
@@ -66,11 +67,11 @@ func GetUserByTokenRequest(ctx *fiber.Ctx) (user *userclass.User, err error) {
 		return
 	}
 
-	// Проверка данных в map и сохранение в user
+	// Проверка данных в map и сохранение в userToken
 	var valueString string
 	var valueFloat64 float64
 	var ok bool
-	user = new(userclass.User)
+	userToken = new(userclass.User)
 	for _, key := range [4]string{"id", "email", "role", "exp"} {
 		if key == "exp" {
 			valueFloat64, ok = mapClaims[key].(float64)
@@ -82,14 +83,20 @@ func GetUserByTokenRequest(ctx *fiber.Ctx) (user *userclass.User, err error) {
 			err = logger.New(token.NotExistKeyInToken + key)
 			return
 		case key == "id":
-			user.ID = valueString
+			userToken.ID = valueString
 		case key == "email":
-			user.Email = valueString
+			userToken.Email = valueString
 		case key == "role":
-			user.Role = valueString
+			userToken.Role = valueString
 		case key == "exp":
-			user.Exp = int64(valueFloat64)
+			userToken.Exp = int64(valueFloat64)
 		}
 	}
+
+	// Дополнительные поля лога
+	c := ctx.Context()
+	context.WithValue(c, "logAddition", map[string]interface{}{})
+	c.Value("logAddition").(map[string]interface{})["Email"] = userToken.Email // Сохранение для лога
+
 	return
 }
