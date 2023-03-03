@@ -9,6 +9,8 @@ import (
 	"github.com/san035/basicApiGo/pkg/userclass"
 )
 
+const KeyContextUserToken = "UserToken"
+
 // SendReeplyOk Отправка ok в ответ запроса
 func SendReeplyOk(ctx *fiber.Ctx) error {
 	err := ctx.Send([]byte(`{"Status":"ok"}`))
