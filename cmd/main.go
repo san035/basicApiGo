@@ -7,6 +7,7 @@ import (
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/osutils"
 	"github.com/san035/basicApiGo/pkg/routerbasic"
+	"github.com/san035/basicApiGo/pkg/storageminio"
 	"github.com/san035/basicApiGo/pkg/token"
 )
 
@@ -27,6 +28,12 @@ func main() {
 
 	// Загрузка настроек
 	err = common.LoadConfig(&config.Config)
+	if err != nil {
+		return
+	}
+
+	// Настройка minio
+	err = storageminio.Init()
 	if err != nil {
 		return
 	}
