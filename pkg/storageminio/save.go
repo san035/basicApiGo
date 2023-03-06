@@ -13,11 +13,12 @@ type FileOpen interface {
 }
 
 // SaveFile сохранение файла в Minio
-func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *string, folderMinIO string) error {
+func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *string, folderMinIO string) (fullFileName string, err error) {
 	// Get Buffer from file
 	buffer, err := file.Open()
 	if err != nil {
-		return logger.WrapWithDeep1(&err)
+		err = logger.WrapWithDeep1(&err)
+		return
 	}
 	defer func() {
 		errBuffer := buffer.Close()
@@ -29,17 +30,19 @@ func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *
 	// Создание бакета
 	err = CreatBucketIfNotExist(ctxMinio, bucketName)
 	if err != nil {
-		return logger.WrapWithDeep1(&err)
+		err = logger.WrapWithDeep1(&err)
+		return
 	}
 
 	// Сохранение файла в minio
-	folderMinIO = CreatFullNameFileMinio(folderMinIO, file.Filename)
-	info, err := MinioClient.PutObject(ctxMinio, *bucketName, folderMinIO, buffer, file.Size, minio.PutObjectOptions{ContentType: file.Header["Content-Type"][0]})
+	fullFileName = CreatFullNameFileMinio(folderMinIO, file.Filename)
+	info, err := MinioClient.PutObject(ctxMinio, *bucketName, fullFileName, buffer, file.Size, minio.PutObjectOptions{ContentType: file.Header["Content-Type"][0]})
 	if err != nil {
-		return logger.WrapWithDeep1(&err)
+		err = logger.WrapWithDeep1(&err)
+		return
 	}
-	log.Debug().Str("Bucket", *bucketName).Str("file", file.Filename).Int64("size", info.Size).Msg("Uploaded +")
-	return nil
+	log.Debug().Str("Bucket", *bucketName).Str("file", fullFileName).Int64("size", info.Size).Msg("Uploaded +")
+	return
 }
 
 func CreatFullNameFileMinio(folder, filename string) string {
