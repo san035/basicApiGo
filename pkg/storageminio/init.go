@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const useSSL = false
+
 var MinioClient *minio.Client
 
 const (
@@ -27,16 +29,22 @@ func Init() (err error) {
 	}
 	setDefaultConfig()
 
-	// создание соединения minio
-	err = createConnect()
 	return
 }
 
-// createConnect создание соединения minio
-func createConnect() (err error) {
+// CreateConnect создание соединения minio
+// если нет соединения с minio, пытается его создать
+func CreateConnect() (err error) {
+	if MinioClient != nil && MinioClient.IsOnline() {
+		return nil
+	}
+
 	var lastErr *error
 	for _, confgMinIO := range Config.ListMinIO {
-		MinioClient, err = MinioConnection(&confgMinIO)
+		MinioClient, err = minio.New(confgMinIO.Uri, &minio.Options{
+			Creds:  credentials.NewStaticV4(confgMinIO.AccessKeyId, confgMinIO.SecretAccessKey, ""),
+			Secure: useSSL,
+		})
 		if err == nil {
 			lastErr = nil
 			break
@@ -54,18 +62,4 @@ func createConnect() (err error) {
 		return logger.Wrap(&err)
 	}
 	return
-}
-
-// MinioConnection func for opening minio connection.
-func MinioConnection(confgMinIO *MinIOInstance) (*minio.Client, error) {
-	const useSSL = false
-	// Initialize minio client object.
-	minioClient, err := minio.New(confgMinIO.Uri, &minio.Options{
-		Creds:  credentials.NewStaticV4(confgMinIO.AccessKeyId, confgMinIO.SecretAccessKey, ""),
-		Secure: useSSL,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return minioClient, err
 }
