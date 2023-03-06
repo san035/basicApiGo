@@ -42,12 +42,14 @@ func (e *ExtendedError) Error() string {
 	return e.Err.Error()
 }
 
+// WrapText - добавление текста addText после тескста err, с добавленим разделетеля ", "
 func WrapText(err *error, addText string) *ExtendedError {
 	return New((*err).Error() + ", " + addText)
 }
 
+// WrapTextBefore - добавление текста addText до err, без добавления разделетеля
 func WrapTextBefore(err *error, addText string) *ExtendedError {
-	return New((*err).Error() + ", " + addText)
+	return New(addText + (*err).Error())
 }
 
 func (e *ExtendedError) GetAddition() interface{} {
