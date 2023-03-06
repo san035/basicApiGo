@@ -22,7 +22,7 @@ const (
 	ExpiresPhotoSecond = time.Second * 60 * 60 * 24 * 7 // срок действия ссылки 1 год
 )
 
-var ListNameFolder = [...]string{NameDiagramFolder, NameDocFolder, NameProfileFolder}
+var ListNameFolder = []string{NameDiagramFolder, NameDocFolder, NameProfileFolder}
 
 func Init() (err error) {
 	err = common.LoadConfig(&Config)
