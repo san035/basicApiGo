@@ -46,6 +46,10 @@ func WrapText(err *error, addText string) *ExtendedError {
 	return New((*err).Error() + ", " + addText)
 }
 
+func WrapTextBefore(err *error, addText string) *ExtendedError {
+	return New((*err).Error() + ", " + addText)
+}
+
 func (e *ExtendedError) GetAddition() interface{} {
 	return e.Addition
 }
