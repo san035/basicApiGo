@@ -17,7 +17,8 @@ var (
 func Init(config *DBConfig) error {
 	listUri = &config.ListUri
 	opts = tarantool.Opts{User: config.User, Pass: config.Password}
-	return ConnectDB()
+	_, err := ConnectDB()
+	return err
 }
 
 // Подключение к БД с перехватываением ощибки
@@ -34,22 +35,24 @@ func tryConnect() (conn *tarantool.Connection, err error) {
 }
 
 // ConnectDB подключение к БД по списку config.Config.DB.ListUri
-func ConnectDB() (err error) {
-	if conn == nil || !conn.ConnectedNow() {
-		count_uri := len(*listUri)
-		for i := 0; i < count_uri; i++ {
+func ConnectDB() (connTarantool *tarantool.Connection, err error) {
+	if conn != nil && conn.ConnectedNow() {
+		return conn, nil
+	}
 
-			conn, err = tryConnect()
-			if err == nil {
-				log.Info().Int("uriID", i).Str("uri", (*listUri)[lastIdUri]).Msg("ConnectDB+")
-				return
-			}
+	countUri := len(*listUri)
+	for i := 0; i < countUri; i++ {
 
-			err = logger.Wrap(&err)
-			log.Error().Err(err).Str("User", opts.User).Str("uri", (*listUri)[lastIdUri]).Msg("ConnectDB-")
-			if count_uri > 1 {
-				lastIdUri = (lastIdUri + 1) % count_uri
-			}
+		conn, err = tryConnect()
+		if err == nil {
+			log.Info().Int("uriID", i).Str("uri", (*listUri)[lastIdUri]).Msg("ConnectDB+")
+			return conn, nil
+		}
+
+		err = logger.Wrap(&err)
+		log.Error().Err(err).Str("User", opts.User).Str("uri", (*listUri)[lastIdUri]).Msg("ConnectDB-")
+		if countUri > 1 {
+			lastIdUri = (lastIdUri + 1) % countUri
 		}
 	}
 	return
