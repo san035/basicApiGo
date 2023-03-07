@@ -14,10 +14,10 @@ var (
 	opts      tarantool.Opts
 )
 
-func Init(config *DBConfig) error {
+func Init(config *DBConfig) (err error) {
 	listUri = &config.ListUri
 	opts = tarantool.Opts{User: config.User, Pass: config.Password}
-	_, err := ConnectDB()
+	conn, err = ConnectDB()
 	return err
 }
 
