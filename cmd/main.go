@@ -56,7 +56,7 @@ func main() {
 	// Тест всех uri БД
 	err = dbtarantool.Init(&config.Config.DB)
 	if err != nil {
-		log.Error().Err(err).Msg("db.Init-")
+		log.Error().Err(err).Msg("db.Init -")
 		//Продолжается работа даже при ошибке
 	}
 

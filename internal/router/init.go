@@ -7,6 +7,8 @@ import (
 
 // InitEndPoint добавление всех маршрутов
 func InitEndPoint(app *fiber.App) {
+	app.Use("/", routerbasic.BerforEndpont)
+
 	app.Get("/", routerbasic.Stat)
 	app.Get("/stat/", routerbasic.Stat)
 }

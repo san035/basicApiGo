@@ -60,19 +60,19 @@ func Stat(ctx *fiber.Ctx) (err error) {
 	}
 	mapaboutAPI["Время запуска ОС"] = time.Unix(int64(timeOS), 0)
 
-	//Проверка токена
-	user, err := GetUserByTokenRequest(ctx)
-	if err != nil {
-		mapaboutAPI["Check token"] = err.Error()
+	// Получение userToken из контекста:
+	c := ctx.UserContext()
+	userToken, ok := c.Value(KeyContextUserToken).(*userclass.User)
+	if !ok {
+		mapaboutAPI["Check token"] = ErrorNoFindUserInContext
 		ctx.Status(fiber.StatusUnauthorized)
-
 	} else {
-		mapaboutAPI["user token"] = struct {
+		mapaboutAPI["userToken token"] = struct {
 			ID, Email, Role, Exp string
-		}{ID: user.ID, Email: user.Email, Role: user.Role, Exp: time.Unix(user.Exp, 0).String()}
+		}{ID: userToken.ID, Email: userToken.Email, Role: userToken.Role, Exp: time.Unix(userToken.Exp, 0).String()}
 
 		// Инфо для админов
-		if user.Role == userclass.RoleAdmin {
+		if userToken.Role == userclass.RoleAdmin {
 			mapaboutAPI["JWT_EXPIRES_MINUTES"] = config.Config.JWT.ExpiresMinutes
 			mapaboutAPI["JWT_FILE_PUBLIC_KEY_RSA"], _ = os.ReadFile(config.Config.JWT.PublicKeyFile)
 			mapaboutAPI["DB_LIST_URI"] = config.Config.DB.ListUri

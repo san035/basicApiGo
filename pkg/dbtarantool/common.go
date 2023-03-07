@@ -27,14 +27,14 @@ func ListInterfaceToStruct(listInterface *[]interface{}, mapNameColumnToData map
 			case int64:
 				*valueTo = valueFrom
 			default:
-				return logger.WrapWithDeep1(&error_parse_data_user, idColumn)
+				return logger.New(ParseDataUser, idColumn)
 			}
 		case *uint64:
 			*valueTo = (*listInterface)[idColumn].(uint64)
 		case *CustomTime: // uint64
 			*valueTo = CustomTime((*listInterface)[idColumn].(uint64))
 		default:
-			return logger.WrapWithDeep1(&error_parse_data_user, map[string]interface{}{"Колонка:": idColumn, "Тип": fmt.Sprintf("%T", distValue)})
+			return logger.New(ParseDataUser, map[string]interface{}{"Колонка:": idColumn, "Тип": fmt.Sprintf("%T", distValue)})
 		}
 	}
 	return nil
