@@ -1,3 +1,10 @@
+# Шаблон микросервиса
+
+# Компиляция
+Важно добавить тэг go_tarantool_ssl_disable
+```
+go build -tags go_tarantool_ssl_disable -ldflags="-X 'main/build.Time=$(date)'" -o app_user_backend cmd\main.go
+```
 
 # Добавление logger в другой проект
 ```

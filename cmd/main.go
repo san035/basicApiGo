@@ -1,9 +1,11 @@
 package main
 
 import (
+	"github.com/rs/zerolog/log"
 	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/internal/router"
 	"github.com/san035/basicApiGo/pkg/common"
+	"github.com/san035/basicApiGo/pkg/dbtarantool"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"github.com/san035/basicApiGo/pkg/osutils"
 	"github.com/san035/basicApiGo/pkg/routerbasic"
@@ -49,6 +51,13 @@ func main() {
 	err = token.Init(&config.Config.JWT)
 	if err != nil {
 		return
+	}
+
+	// Тест всех uri БД
+	err = dbtarantool.Init(&config.Config.DB)
+	if err != nil {
+		log.Error().Err(err).Msg("db.Init-")
+		//Продолжается работа даже при ошибке
 	}
 
 	// Запуск хостинга

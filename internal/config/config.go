@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/san035/basicApiGo/pkg/dbtarantool"
 	"github.com/san035/basicApiGo/pkg/token"
 )
 
@@ -17,6 +18,6 @@ var Config = struct {
 		KeyFileHtpps  string `default:"" env:"API_KEY_FILE_HTPPS" yaml:"KeyFileHtpps"`        // Ссылка на файл key.pem, при отсутствии протокол http
 		LevelLog      string `default:"info" env:"API_LEVELlOG" yaml:"LevelLog"`              // Режим логгирования
 	}
-	DB  DBConfig
+	DB  dbtarantool.DBConfig
 	JWT token.JWTConfig
 }{}
