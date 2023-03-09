@@ -2,7 +2,6 @@ package routerbasic
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/san035/basicApiGo/internal/config"
 	"github.com/san035/basicApiGo/pkg/userclass"
 	"github.com/shirou/gopsutil/host"
 	"os"
@@ -72,11 +71,11 @@ func Stat(ctx *fiber.Ctx) (err error) {
 		}{ID: userToken.ID, Email: userToken.Email, Role: userToken.Role, Exp: time.Unix(userToken.Exp, 0).String()}
 
 		// Инфо для админов
-		if userToken.Role == userclass.RoleAdmin {
-			mapaboutAPI["JWT_EXPIRES_MINUTES"] = config.Config.JWT.ExpiresMinutes
-			mapaboutAPI["JWT_FILE_PUBLIC_KEY_RSA"], _ = os.ReadFile(config.Config.JWT.PublicKeyFile)
-			mapaboutAPI["DB_LIST_URI"] = config.Config.DB.ListUri
-		}
+		//if userToken.Role == userclass.RoleAdmin {
+		//	mapaboutAPI["JWT_EXPIRES_MINUTES"] = config.Config.JWT.ExpiresMinutes
+		//	mapaboutAPI["JWT_FILE_PUBLIC_KEY_RSA"] = config.Config.JWT.PublicKeyFile
+		//	mapaboutAPI["DB_LIST_URI"] = config.Config.DB.ListUri
+		//}
 	}
 
 	err = ctx.JSON(mapaboutAPI)
