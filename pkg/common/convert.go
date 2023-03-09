@@ -17,3 +17,16 @@ func SetValueDefaultByReflect(valueStruct interface{}) {
 	}
 	return
 }
+
+// StrListStructure Возаращает строку списока имен структуры
+func StrListStructure(s interface{}) (rez string) {
+	a := reflect.ValueOf(s)
+	if a.Kind() != reflect.Ptr {
+		return ""
+	}
+	cointField := reflect.ValueOf(s).Elem().NumField()
+	for x := 0; x < cointField; x++ {
+		rez += reflect.TypeOf(s).Elem().Field(x).Name + " "
+	}
+	return
+}
