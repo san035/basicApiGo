@@ -3,7 +3,6 @@ package storageminio
 import (
 	"context"
 	"github.com/minio/minio-go/v7"
-	"github.com/san035/basicApiGo/pkg/common"
 	"github.com/san035/basicApiGo/pkg/logger"
 	"net/url"
 	"strconv"
@@ -27,11 +26,6 @@ func CreatBucketIfNotExist(ctx context.Context, bucketName *string) error {
 		return err
 	}
 	return nil
-}
-
-// TrueTypeFile - возвращает признак, что тип файла верный
-func TrueTypeFile(typeFile string) bool {
-	return common.InArray(ListNameFolder, typeFile)
 }
 
 // CheckDataExpiresUrl Проверку времени действия ссылки

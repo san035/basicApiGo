@@ -31,6 +31,8 @@ func ListInterfaceToStruct(listInterface *[]interface{}, mapNameColumnToData map
 			}
 		case *uint64:
 			*valueTo = (*listInterface)[idColumn].(uint64)
+		case *int:
+			*valueTo = (*listInterface)[idColumn].(int)
 		case *CustomTime: // uint64
 			*valueTo = CustomTime((*listInterface)[idColumn].(uint64))
 		default:
