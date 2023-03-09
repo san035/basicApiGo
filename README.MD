@@ -22,5 +22,5 @@ go mod tidy
 ```
 
 ## git добавление новой версии
-git tag v1.0.7
+git tag v1.0.73
 git push --tags
