@@ -24,8 +24,8 @@ func StrListStructure(s interface{}) (rez string) {
 	if a.Kind() != reflect.Ptr {
 		return ""
 	}
-	cointField := reflect.ValueOf(s).Elem().NumField()
-	for x := 0; x < cointField; x++ {
+	countField := reflect.ValueOf(s).Elem().NumField()
+	for x := 0; x < countField; x++ {
 		rez += reflect.TypeOf(s).Elem().Field(x).Name + " "
 	}
 	return

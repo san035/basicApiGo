@@ -46,3 +46,7 @@ func (customTime *CustomTime) MarshalJSON() ([]byte, error) {
 func (customTime *CustomTime) GetData() string {
 	return time.Unix(int64(*customTime), 0).Format(FormatData)
 }
+
+func (customTime *CustomTime) Format(layout string) string {
+	return time.Unix(int64(*customTime), 0).Format(layout)
+}
