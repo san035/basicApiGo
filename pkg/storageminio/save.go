@@ -13,7 +13,8 @@ type FileOpen interface {
 }
 
 // SaveFile сохранение файла в Minio
-func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *string, folderMinIO string) (fullFileName string, err error) {
+// если fileName не задан, то имя возьмется из file.Filename
+func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *string, folderMinIO, fileName string) (fullFileName string, err error) {
 	// Get Buffer from file
 	buffer, err := file.Open()
 	if err != nil {
@@ -35,7 +36,10 @@ func SaveFile(ctxMinio context.Context, file *multipart.FileHeader, bucketName *
 	}
 
 	// Сохранение файла в minio
-	fullFileName = CreatFullNameFileMinio(folderMinIO, file.Filename)
+	if fileName == "" {
+		fileName = file.Filename
+	}
+	fullFileName = CreatFullNameFileMinio(folderMinIO, fileName)
 	info, err := MinioClient.PutObject(ctxMinio, *bucketName, fullFileName, buffer, file.Size, minio.PutObjectOptions{ContentType: file.Header["Content-Type"][0]})
 	if err != nil {
 		err = logger.WrapWithDeep1(&err)
