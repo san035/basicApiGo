@@ -48,5 +48,9 @@ func (customTime *CustomTime) GetData() string {
 }
 
 func (customTime *CustomTime) Format(layout string) string {
-	return time.Unix(int64(*customTime), 0).Format(layout)
+	unixTime := int64(*customTime)
+	if unixTime == 0 {
+		return ""
+	}
+	return time.Unix(unixTime, 0).Format(layout)
 }
